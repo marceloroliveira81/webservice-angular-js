@@ -2,13 +2,15 @@
 
 require_once('../config.php');
 
+$acao = $_GET['acao'];
+
 /*$usuario = Usuario::create(array(
 	'nome' => 'Anna Clara', 
 	'email' => 'annaclara.oliveira@gmail.com'));
 
 $usuario->save();*/
 
-$acao = $_GET['acao'];
+
 
 if ($acao == 'listar') {
 	$usuarios = Usuario::all();
@@ -26,6 +28,20 @@ if ($acao == 'listar') {
 	}
 
 	echo json_encode($array_usuarios);	
+}
+
+if ($acao == 'cadastrar') {
+
+	$dados = json_decode(file_get_contents('php://input'), true);
+
+	$usuario = Usuario::create(array(
+			'nome' => $dados['nome'], 
+			'email' => $dados['email']
+		));
+
+	$usuario->save();
+
+	echo "cadastrado";
 }
 
 ?>
