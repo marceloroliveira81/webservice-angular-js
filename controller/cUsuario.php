@@ -10,8 +10,6 @@ $acao = $_GET['acao'];
 
 $usuario->save();*/
 
-
-
 if ($acao == 'listar') {
 	$usuarios = Usuario::all();
 
@@ -42,6 +40,17 @@ if ($acao == 'cadastrar') {
 	$usuario->save();
 
 	echo "cadastrado";
+}
+
+if ($acao == 'excluir') {
+
+	$dados = json_decode(file_get_contents('php://input'), true);
+
+	$usuario = Usuario::find($dados['id_usuario']);
+
+	$usuario->delete();
+
+	echo "excluido";
 }
 
 ?>
