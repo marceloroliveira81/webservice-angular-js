@@ -53,4 +53,33 @@ if ($acao == 'excluir') {
 	echo "excluido";
 }
 
+if ($acao == 'buscarPorId') {
+
+	$id = $_GET['id'];
+
+	$usuario = Usuario::find($id);
+
+	$array = [
+		"id_usuario" => $usuario->id_usuario,
+		"nome" => $usuario->nome,
+		"email" => $usuario->email
+	];
+
+	echo json_encode($array);
+}
+
+if ($acao == 'alterar') {
+
+	$dados = json_decode(file_get_contents('php://input'), true);
+
+	$usuario = Usuario::find($dados['id_usuario']);
+
+	$usuario->nome = $dados['nome'];
+	$usuario->email = $dados['email'];
+
+	$usuario->save();
+
+	echo "alterado";
+}
+
 ?>
